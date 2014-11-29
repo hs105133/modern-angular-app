@@ -1,0 +1,24 @@
+{
+  "name": "api",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Hemant",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "express": "~4.10.2",
+    "body-parser": "~1.9.3",
+    "mongoose": "~3.8.19",
+    "bcrypt-nodejs": "0.0.3",
+    "crypto": "0.0.3",
+    "jwt-simple": "~0.2.0",
+    "passport": "~0.2.1",
+    "passport-local": "~1.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "~1.2.1"
+  }
+}

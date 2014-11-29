@@ -1,0 +1,60 @@
+<!doctype html>
+<html ng-app="jobApp">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="bower_components/bootswatch/cosmo/bootstrap.css">
+    <link rel="stylesheet" href="bower_components/animate.css/animate.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+  </head>
+  <body>
+
+  <div id="header" ng-include="'views/partials/header.html'"></div>
+    <div class="container ui-view-container">
+
+
+      <div ui-view></div>
+        <div ng-include="'views/alert.html'"></div>
+      <div class="footer">
+        <p><span class="glyphicon glyphicon-heart"></span> By Hemant Singh</p>
+      </div>
+    </div>
+
+    <!-- build:js(.) scripts/oldieshim.js -->
+    <!--[if lt IE 9]>
+    <script src="bower_components/es5-shim/es5-shim.js"></script>
+    <script src="bower_components/json3/lib/json3.js"></script>
+    <![endif]-->
+    <!-- endbuild -->
+
+    <!-- build:js(.) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+        <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <script src="scripts/app.js"></script>
+        <script src="scripts/app.config.js"></script>
+        <script src="scripts/directives/passwordMatch.js"></script>
+        <script src="scripts/controllers/register.js"></script>
+        <script src="scripts/services/alert.js"></script>
+        <script src="scripts/services/authtoken.js"></script>
+        <script src="scripts/controllers/header.js"></script>
+        <script src="scripts/controllers/logout.js"></script>
+        <script src="scripts/controllers/jobs.js"></script>
+        <script src="scripts/services/authinterceptor.js"></script>
+        <script src="scripts/controllers/login.js"></script>
+        <script src="scripts/services/auth.js"></script>
+        <!-- endbuild -->
+</body>
+</html>

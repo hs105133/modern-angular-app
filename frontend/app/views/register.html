@@ -1,0 +1,13 @@
+<form class="form-signin" name="register" novalidate ng-submit="addUser(formData)">
+    <h1 class="form-signin-heading text-muted">Sign In</h1>
+    <input type="email" class="form-control" placeholder="Email address" required name="email" autofocus ng-model="formData.email">
+    <p class="help-block text-danger" ng-show="register.email.$error.required && register.email.$dirty">Email Required</p>
+    <p class="help-block text-danger" ng-show="register.email.$error.email && register.email.$invalid">Valid Email please!</p>
+    <input type="password" class="form-control" placeholder="Password" ng-model="formData.password" name="password" required>
+    <p class="help-block text-danger" ng-show="register.password.$error.required && register.password.$dirty">Password Required</p>
+    <input type="password" class="form-control" placeholder="Confirm Password" name="cPassword" ng-model="cPassword" password-match="formData.password">
+    <p class="help-block text-danger" ng-show="register.cPassword.$dirty && register.cPassword.$invalid">Password Not match</p>
+    <button class="btn btn-default btn-block" type="submit" ng-disabled="register.$invalid">
+        Register
+    </button>
+</form>

@@ -1,0 +1,77 @@
+.ui-view-container{
+  position: relative;
+}
+
+[ui-view].ng-enter,
+[ui-view].ng-leave{
+  position: absolute;
+  left: 0;
+  right: 0 ;
+  transition: all .25s ease-in-out;
+}
+
+[ui-view].ng-enter{
+  opacity: 0;
+  transform: scale3d(.96, .96, .96);
+}
+[ui-view].ng-enter-active{
+  opacity: 1;
+  transform: scale3d(1, 1,1);
+}
+[ui-view].ng-leave{
+  opacity: 1;
+  transform: scale3d(0, 0, 0);
+}
+[ui-view].ng-leave-active{
+  opacity: 0;
+}
+
+.main-alert{
+  max-width: 400px;
+  margin: 0 auto;
+  position: absolute;
+  top: 20px;
+  left: 5px;
+  right: 5px;
+}
+
+.alert-hidden{
+  visibility: hidden;
+}
+
+.form-signin {
+    max-width: 280px;
+    padding: 15px;
+    margin: 0 auto;
+      margin-top:50px;
+  }
+  .form-signin .form-signin-heading, .form-signin {
+    margin-bottom: 10px;
+  }
+  .form-signin .form-control {
+    position: relative;
+    font-size: 16px;
+    height: auto;
+    padding: 10px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+  .form-signin .form-control:focus {
+    z-index: 2;
+  }
+  .form-signin input[type="text"] {
+    margin-bottom: -1px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-style: none;
+  }
+  .form-signin input[type="password"] {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-top-style: none;
+  }
+  .form-signin-heading {
+    color: #666;
+    text-align: center;
+  }
