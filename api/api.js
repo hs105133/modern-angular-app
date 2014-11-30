@@ -2,11 +2,18 @@ var express = require('express'),
     bodyParser = require("body-parser"),
     mongoose = require("mongoose"),
     User = require("./models/User.js"),
-    jwt = require("jwt-simple");
+    jwt = require("jwt-simple"),
+    passport = require("passport"),
+    LocalStrategy = require("passport-local").Strategy;
 
 var app = express();
 
 app.use(bodyParser.json());
+app.use(passport.initialize());
+
+passport.serializeUser(function(user, done) {
+    done(null, user.id);
+});
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -25,14 +32,18 @@ var jobs = [
 
 app.get('/jobs', function(req, res) {
 
-    if(!req.headers.authorization)
-        return res.status(401).send({message: "You are not authorized!"});
+    if (!req.headers.authorization)
+        return res.status(401).send({
+            message: "You are not authorized!"
+        });
 
     var token = req.headers.authorization.split(" ")[1];
     var payload = jwt.decode(token, "mysecretkey");
 
-    if(!payload.sub){
-        return res.status(401).send({message: "You are not authorized!"});
+    if (!payload.sub) {
+        return res.status(401).send({
+            message: "You are not authorized!"
+        });
     }
 
     res.json(jobs);
@@ -46,38 +57,75 @@ app.get('/', function(req, res) {
 
 mongoose.connect("mongodb://localhost/jobfinder");
 
+var strateguOptions = {
+    usernameField: "email"
+};
 
-app.post('/register', function(req, res) {
-    var newUser = new User(req.body);
+var loginStrategy = new LocalStrategy(strateguOptions, function(email, password, done) {
+    User.findOne({
+        email: email
+    }, function(err, user) {
+        if (err) {
+            return done(err);
+        }
+        if (!user) {
+            return done(null, false, {
+                message: 'Incorrect email.'
+            });
+        }
 
-    newUser.save(function(err, data){    	
-        createSendToken(newUser, res);
+        user.comparePassword(password, function(err, isMatch) {
+            if (err) {
+                return done(err);
+            }
+            if (!isMatch) return done(null, false, {
+                message: 'Incorrect password.'
+            });
+            return done(null, user);
+        });
+
     });
 });
 
-app.post("/login", function(req, res){
-    var inputUser = req.body;
 
-    User.findOne({email: inputUser.email}, function(err, user){
-        if(err) throw err;
+var registerStrategy = new LocalStrategy(strateguOptions, function(email, password, done) {
+    var newUser = new User({
+        email: email,
+        password: password
+    });
 
-        if(!user) 
-            return res.status(401).send({message: "Wrong email/password"});
+    User.findOne({
+        email: email
+    }, function(err, user) {
+        if (err) {
+            return done(err);
+        }
+        if (user) {
+            return done(null, false, {
+                message: 'Email already exists'
+            });
+        }
 
-        user.comparePassword(inputUser.password, function(err, isMatch){
-            if(err) throw err;
-
-            if(!isMatch){
-                return res.status(401).send({message: "Wrong email/password"});
-            }
-
-            createSendToken(user, res);
+        newUser.save(function(err) {
+            done(null, newUser);
         });
-    })
+
+    });
+});
+
+passport.use("local-register", registerStrategy);
+passport.use("local-login", loginStrategy);
+
+app.post('/register', passport.authenticate('local-register'), function(req, res) {
+    createSendToken(req.user, res);
+});
+
+app.post("/login", passport.authenticate('local-login'), function(req, res) {
+    createSendToken(req.user, res);
 });
 
 
-function createSendToken(user, res){
+function createSendToken(user, res) {
     var payload = {
         sub: user._id
     };
