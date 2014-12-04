@@ -55,7 +55,7 @@ app.get('/', function(req, res) {
     });
 });
 
-mongoose.connect("mongodb://localhost/jobfinder");
+mongoose.connect("mongodb://hemant:123@ds053320.mongolab.com:53320/jobfinder");
 
 var strateguOptions = {
     usernameField: "email"
